@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "./proto";
+
+service AccountService {
+    rpc Create(CreateAccountRequest) returns (SuccessResponse);
+}
+
+message CreateAccountRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message SuccessResponse {
+    string response = 1;
+}

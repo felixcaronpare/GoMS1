@@ -2,10 +2,10 @@ package v1
 
 import "github.com/felixcaronpare/GoMS1/internal/models"
 
-type repoInterface interface {
+type RepoInterface interface {
 	Create(models.Account) error
 }
 
-type usecaseInterface interface {
+type UsecaseInterface interface {
 	Create(models.Account) error
 }

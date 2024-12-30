@@ -10,7 +10,7 @@ type Repo struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) interfaces.RepoInterface {
+func New(db *gorm.DB) interfaces.repoInterface {
 	return &Repo{db}
 }
 

@@ -3,7 +3,7 @@ package usecase
 import (
 	"errors"
 
-	"github.com/felixcaronpare/GoMS1/internals/models"
+	"github.com/felixcaronpare/GoMS1/internal/models"
 	interfaces "github.com/felixcaronpare/GoMS1/pkg/v1"
 	accountRepo "github.com/felixcaronpare/GoMS1/pkg/v1/repository"
 	"gorm.io/gorm"

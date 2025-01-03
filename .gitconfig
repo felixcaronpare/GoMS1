@@ -1,2 +1,2 @@
-# [url "git@github.com:"] 
-#     insteadOf = https://github.com/
+[url "git@github.com:felixcaronpare/GoMS1.git"]
+    insteadOf = https://github.com/felixcaronpare/GoMS1

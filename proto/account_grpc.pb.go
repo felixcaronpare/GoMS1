@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountServiceClient interface {
-	Create(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
+	Create(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*AccountProfileResponse, error)
 }
 
 type accountServiceClient struct {
@@ -37,9 +37,9 @@ func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
 	return &accountServiceClient{cc}
 }
 
-func (c *accountServiceClient) Create(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
+func (c *accountServiceClient) Create(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*AccountProfileResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SuccessResponse)
+	out := new(AccountProfileResponse)
 	err := c.cc.Invoke(ctx, AccountService_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ func (c *accountServiceClient) Create(ctx context.Context, in *CreateAccountRequ
 // All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility.
 type AccountServiceServer interface {
-	Create(context.Context, *CreateAccountRequest) (*SuccessResponse, error)
+	Create(context.Context, *CreateAccountRequest) (*AccountProfileResponse, error)
 	mustEmbedUnimplementedAccountServiceServer()
 }
 
@@ -62,7 +62,7 @@ type AccountServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAccountServiceServer struct{}
 
-func (UnimplementedAccountServiceServer) Create(context.Context, *CreateAccountRequest) (*SuccessResponse, error) {
+func (UnimplementedAccountServiceServer) Create(context.Context, *CreateAccountRequest) (*AccountProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}

@@ -5,7 +5,7 @@ import (
 
 	"github.com/felixcaronpare/GoMS1/internal/models"
 	interfaces "github.com/felixcaronpare/GoMS1/pkg/v1"
-	accountRepo "github.com/felixcaronpare/GoMS1/pkg/v1/repository"
+	// accountRepo "github.com/felixcaronpare/GoMS1/pkg/v1/repository"
 	"gorm.io/gorm"
 )
 
@@ -22,7 +22,7 @@ func New(repo interfaces.RepoInterface) interfaces.UsecaseInterface {
 //Create
 func (uc *Usecase) Create(account models.Account) (models.Account, error) {
 	if _, err := uc.repo.GetByEmail(account.Email); !errors.Is(err, gorm.ErrRecordNotFound) {
-		return models.Account{}, error.New("the provided email is already associated with another account.")
+		return models.Account{}, errors.New("the provided email is already associated with another account.")
 	}
 
 	return uc.repo.Create(account)

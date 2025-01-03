@@ -18,7 +18,7 @@ import (
 
 func main() {
 	// connect to the db
-	db := dbConfig.dbConn()
+	db := dbConfig.DbConn()
 	migrations(db)
 
 	// add a listener address

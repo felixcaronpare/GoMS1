@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"errors"
+	"log"
 
 	"github.com/felixcaronpare/GoMS1/internal/models"
 	interfaces "github.com/felixcaronpare/GoMS1/pkg/v1"
@@ -25,6 +26,8 @@ func NewServer(grpcServer *grpc.Server, usecase_p interfaces.UsecaseInterface) {
 
 //Create
 func (srv *AccountServStruct) Create(ctx context.Context, req *pb.CreateAccountRequest) (*pb.AccountProfileResponse, error) {
+    log.Printf("Received CreateAccountRequest: Name=%s, Email=%s, Password=%s", req.GetName(), req.GetEmail(), req.GetPassword())
+
 	data := srv.transformAccountRPC(req)
 	if data.Email == "" || data.Password == "" || data.Name == "" {
 		return &pb.AccountProfileResponse{}, errors.New("All fields must be filled")
@@ -40,10 +43,13 @@ func (srv *AccountServStruct) Create(ctx context.Context, req *pb.CreateAccountR
 
 //=========== UTILS ===========
 
-func (srv *AccountServStruct) transformAccountRPC(req *pb.CreateAccountRequest) models.Account{
-	return models.Account{Name: req.GetName(), Email: req.GetEmail()}
-  }
-  
+func (srv *AccountServStruct) transformAccountRPC(req *pb.CreateAccountRequest) models.Account {
+    return models.Account{
+        Name:     req.GetName(),
+        Email:    req.GetEmail(),
+        Password: req.GetPassword(),
+    }
+}
 func (srv *AccountServStruct) transformAccountModel(account models.Account) *pb.AccountProfileResponse {
 	return &pb.AccountProfileResponse{Id: string(account.ID), Name: account.Name, Email: account.Email, Password: account.Password}
   }

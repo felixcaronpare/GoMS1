@@ -34,6 +34,7 @@ func main() {
 	handler.NewServer(grpcServer, accountUsecase)
 
 	// start serving to the address
+	log.Println("Server listening on :5001")
 	log.Fatal(grpcServer.Serve(lis))
 }
 

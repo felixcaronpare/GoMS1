@@ -3,6 +3,7 @@ module github.com/felixcaronpare/GoMS1
 go 1.23.4
 
 require (
+	github.com/joho/godotenv v1.5.1
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.1
 	gorm.io/driver/postgres v1.5.11

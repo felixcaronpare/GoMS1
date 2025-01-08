@@ -19,6 +19,7 @@ import (
 func main() {
 	// connect to the db
 	db := dbConfig.DbConn()
+	log.Println("connection to db successful:")
 	migrations(db)
 
 	// add a listener address
@@ -46,8 +47,8 @@ func initAccountServer(db *gorm.DB) interfaces.UsecaseInterface {
 func migrations(db *gorm.DB) {
 	err := db.AutoMigrate(&models.Account{})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Migration failed: %v", err)
 	} else {
-		fmt.Println("Migrated")
+		fmt.Println("Migration successful")
 	}
 }

@@ -22,12 +22,11 @@ func DbConn() *gorm.DB{
   return db
 }
 
-
-//=========== UTILS ===========
+//======== Utils =========
 func GetDsnFromEnv() string {
   err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Fatalf("Error loading .env file", err)
 	}
 
   host := os.Getenv("DB_HOST")

@@ -14,6 +14,8 @@ func New(db *gorm.DB) interfaces.RepoInterface {
 	return &Repo{db}
 }
 
+//=========== CRUD ===========
+
 func (repo *Repo) Create(account models.Account) (models.Account, error) {
 	err := repo.db.Create(&account).Error
 

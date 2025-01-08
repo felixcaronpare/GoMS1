@@ -22,7 +22,7 @@ func New(repo interfaces.RepoInterface) interfaces.UsecaseInterface {
 //Create
 func (uc *Usecase) Create(account models.Account) (models.Account, error) {
 	if _, err := uc.repo.GetByEmail(account.Email); !errors.Is(err, gorm.ErrRecordNotFound) {
-		return models.Account{}, errors.New("the provided email is already associated with another account.")
+		return models.Account{}, errors.New("The provided email is already associated with another account.")
 	}
 
 	return uc.repo.Create(account)

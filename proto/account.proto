@@ -3,6 +3,9 @@ option go_package = "./proto";
 
 service AccountService {
     rpc Create(CreateAccountRequest) returns (AccountProfileResponse);
+    rpc Read(SingleAccountRequest) returns (AccountProfileResponse);
+    rpc Update(SingleAccountRequest) returns (SuccessResponse);
+    rpc Delete(SingleAccountRequest) returns (SuccessResponse);
 }
 
 message CreateAccountRequest {
@@ -10,6 +13,10 @@ message CreateAccountRequest {
     string Email = 2;
     string Password = 3;
 }
+
+message SingleAccountRequest{
+    string id = 1;
+  }
 
 message AccountProfileResponse{
     string id = 1;

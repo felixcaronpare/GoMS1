@@ -20,6 +20,9 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AccountService_Create_FullMethodName = "/AccountService/Create"
+	AccountService_Read_FullMethodName   = "/AccountService/Read"
+	AccountService_Update_FullMethodName = "/AccountService/Update"
+	AccountService_Delete_FullMethodName = "/AccountService/Delete"
 )
 
 // AccountServiceClient is the client API for AccountService service.
@@ -27,6 +30,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountServiceClient interface {
 	Create(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*AccountProfileResponse, error)
+	Read(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*AccountProfileResponse, error)
+	Update(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
+	Delete(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error)
 }
 
 type accountServiceClient struct {
@@ -47,11 +53,44 @@ func (c *accountServiceClient) Create(ctx context.Context, in *CreateAccountRequ
 	return out, nil
 }
 
+func (c *accountServiceClient) Read(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*AccountProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AccountProfileResponse)
+	err := c.cc.Invoke(ctx, AccountService_Read_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) Update(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SuccessResponse)
+	err := c.cc.Invoke(ctx, AccountService_Update_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) Delete(ctx context.Context, in *SingleAccountRequest, opts ...grpc.CallOption) (*SuccessResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SuccessResponse)
+	err := c.cc.Invoke(ctx, AccountService_Delete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServiceServer is the server API for AccountService service.
 // All implementations must embed UnimplementedAccountServiceServer
 // for forward compatibility.
 type AccountServiceServer interface {
 	Create(context.Context, *CreateAccountRequest) (*AccountProfileResponse, error)
+	Read(context.Context, *SingleAccountRequest) (*AccountProfileResponse, error)
+	Update(context.Context, *SingleAccountRequest) (*SuccessResponse, error)
+	Delete(context.Context, *SingleAccountRequest) (*SuccessResponse, error)
 	mustEmbedUnimplementedAccountServiceServer()
 }
 
@@ -64,6 +103,15 @@ type UnimplementedAccountServiceServer struct{}
 
 func (UnimplementedAccountServiceServer) Create(context.Context, *CreateAccountRequest) (*AccountProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedAccountServiceServer) Read(context.Context, *SingleAccountRequest) (*AccountProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
+}
+func (UnimplementedAccountServiceServer) Update(context.Context, *SingleAccountRequest) (*SuccessResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedAccountServiceServer) Delete(context.Context, *SingleAccountRequest) (*SuccessResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
 func (UnimplementedAccountServiceServer) testEmbeddedByValue()                        {}
@@ -104,6 +152,60 @@ func _AccountService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccountService_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Read(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Read_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Read(ctx, req.(*SingleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Update_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Update(ctx, req.(*SingleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SingleAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountService_Delete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).Delete(ctx, req.(*SingleAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +216,18 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _AccountService_Create_Handler,
+		},
+		{
+			MethodName: "Read",
+			Handler:    _AccountService_Read_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _AccountService_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _AccountService_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
